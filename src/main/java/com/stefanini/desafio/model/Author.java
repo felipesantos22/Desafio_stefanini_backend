@@ -32,6 +32,9 @@ public class Author {
   private Long id;
 
   @Column
+  private String name;
+
+  @Column
   private Sexo sexo;
 
   @Column
