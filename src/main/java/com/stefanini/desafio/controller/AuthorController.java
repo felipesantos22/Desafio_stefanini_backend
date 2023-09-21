@@ -24,7 +24,8 @@ public class AuthorController {
 
   @PostMapping
   public ResponseEntity<?> create(@RequestBody Author author) {
-    Optional<Author> optionalAuthor = authorService.getByemail(author.getEmail());
+    Optional<Author> optionalAuthor = authorService.getByEmail(author.getEmail());
+    Optional<Author> optionalCpf = authorService.getByCpf(author.getCpf());
     if (author.getName().isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nome obrigatorio!");
     }
@@ -36,6 +37,12 @@ public class AuthorController {
     }
     if (author.getCountry().isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("País não informado!");
+    }
+    if (author.getCountry().equalsIgnoreCase("Brasil") && author.getCpf().isEmpty()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CPF obrigatorio!");
+    }
+    if (optionalCpf.isPresent()) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cpf já existe!");
     } else {
       Author authors = authorService.create(author);
       return ResponseEntity.status(HttpStatus.CREATED).body(authors);

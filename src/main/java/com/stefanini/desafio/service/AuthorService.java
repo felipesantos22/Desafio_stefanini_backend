@@ -19,12 +19,16 @@ public class AuthorService {
     return authorRepository.save(author);
   }
 
-  public List<Author> read(){
+  public List<Author> read() {
     return authorRepository.findAll();
   }
 
-  public Optional<Author> getByemail(String email) {
+  public Optional<Author> getByEmail(String email) {
     return authorRepository.findByEmail(email);
+  }
+
+  public Optional<Author> getByCpf(String cpf) {
+    return authorRepository.findByCpf(cpf);
   }
 
 
