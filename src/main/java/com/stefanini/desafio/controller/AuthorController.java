@@ -26,6 +26,7 @@ public class AuthorController {
   public ResponseEntity<?> create(@RequestBody Author author) {
     Optional<Author> optionalAuthor = authorService.getByEmail(author.getEmail());
     Optional<Author> optionalCpf = authorService.getByCpf(author.getCpf());
+
     if (author.getName().isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Nome obrigatorio!");
     }
@@ -40,6 +41,10 @@ public class AuthorController {
     }
     if (author.getCountry().equalsIgnoreCase("Brasil") && author.getCpf().isEmpty()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("CPF obrigatorio!");
+    }
+    if (author.getCountry().equalsIgnoreCase("Brasil") && author.getCpf().length() != 14) {
+      return ResponseEntity.status(HttpStatus.NOT_FOUND)
+          .body("CPF com formato inválido, ex: 000.000.000-00");
     }
     if (optionalCpf.isPresent()) {
       return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Cpf já existe!");

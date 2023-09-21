@@ -10,7 +10,7 @@ import jakarta.persistence.JoinColumn;
 import jakarta.persistence.JoinTable;
 import jakarta.persistence.ManyToMany;
 import jakarta.persistence.Table;
-import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Pattern;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
@@ -50,11 +50,11 @@ public class Author {
   @Column
   private String cpf;
 
-  @ManyToMany(cascade = { CascadeType.ALL })
+  @ManyToMany(cascade = {CascadeType.ALL})
   @JoinTable(
       name = "Author_ArtWork",
-      joinColumns = { @JoinColumn(name = "author_id") },
-      inverseJoinColumns = { @JoinColumn(name = "artwork_id") }
+      joinColumns = {@JoinColumn(name = "author_id")},
+      inverseJoinColumns = {@JoinColumn(name = "artwork_id")}
   )
   private List<Art> artWorks = new ArrayList<>();
 
